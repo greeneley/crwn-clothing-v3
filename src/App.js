@@ -3,7 +3,7 @@ const App = () => {
   const categories = [
     {
       id: 1,
-      title: "Hats"
+      title: "Hats Demo"
     },
     {
       id: 2,
