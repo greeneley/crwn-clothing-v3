@@ -5,6 +5,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBFDVrw_v8pg9f2DOu2N0eewDxGFfqRrxg",
   authDomain: "crwn-clothing-v3-b22c9.firebaseapp.com",
@@ -25,3 +27,11 @@ provider.getCustomParameters({
 
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+
+export const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth) => {
+  const userDocRef = doc(db, "user", userAuth.uid);
+  const userSnapshot = await getDoc(userDocRef);
+  console.log(userSnapshot);
+};
