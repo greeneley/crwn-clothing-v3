@@ -1,7 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-
 const firebaseConfig = {
   apiKey: "AIzaSyBFDVrw_v8pg9f2DOu2N0eewDxGFfqRrxg",
   authDomain: "crwn-clothing-v3-b22c9.firebaseapp.com",
@@ -26,6 +30,7 @@ export const signInWithGooglePopup = () =>
 export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async (userAuth) => {
+  if (!userAuth) return;
   const userDocRef = doc(db, "user", userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
 
@@ -43,4 +48,9 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     }
   }
   return userDocRef;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password);
 };
