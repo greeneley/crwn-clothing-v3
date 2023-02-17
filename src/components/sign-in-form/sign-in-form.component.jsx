@@ -28,28 +28,17 @@ const SignInForm = () => {
       console.log(response);
       resetFormFields();
     } catch (error) {
-      console.log(error);
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("Incorrect password for email");
+          break;
+        case "auth/user-not-found":
+          alert("No user associated with this email");
+          break;
+        default:
+          console.log(error);
+      }
     }
-    // if (password !== confirmPassword) {
-    //     alert("password and confirm password not match");
-    //     return;
-    // }
-    //
-    // try {
-    //     const { user } = await createAuthUserWithEmailAndPassword(
-    //         email,
-    //         password
-    //     );
-    //
-    //     await createUserDocumentFromAuth(user, { displayName });
-    //     resetFormFields();
-    // } catch (error) {
-    //     if (error.code === "auth/email-already-in-use") {
-    //         alert("Cannot create user, email already in use");
-    //     } else {
-    //         console.log("user creation encountered an error", error);
-    //     }
-    // }
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -84,7 +73,7 @@ const SignInForm = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
-          <Button buttonType="google" onClick={signInWithGoogle}>
+          <Button type="button" buttonType="google" onClick={signInWithGoogle}>
             Google Sign In
           </Button>
         </div>
