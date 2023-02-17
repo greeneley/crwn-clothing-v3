@@ -3,10 +3,11 @@ import Button from "../button/button.component";
 import React, { useState } from "react";
 import {
   createUserDocumentFromAuth,
-  signInWithEmailAndPasswordFirebase,
+  signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
 } from "../../utils/firebase/firebase.utils";
 import "./sign-in-form.styles.scss";
+
 const defaultFormFields = {
   email: "",
   password: "",
@@ -20,7 +21,7 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await signInWithEmailAndPasswordFirebase(
+      const response = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
@@ -55,10 +56,9 @@ const SignInForm = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const logGooglePopup = async () => {
+  const signInWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
-    console.log(userDocRef);
+    await createUserDocumentFromAuth(user);
   };
 
   return (
@@ -82,10 +82,12 @@ const SignInForm = () => {
           name="password"
           value={password}
         />
-        <Button type="submit">Sign In</Button>
-        <Button buttonType="google" onClick={logGooglePopup}>
-          Sign In With Google
-        </Button>
+        <div className="buttons-container">
+          <Button type="submit">Sign In</Button>
+          <Button buttonType="google" onClick={signInWithGoogle}>
+            Google Sign In
+          </Button>
+        </div>
       </form>
     </div>
   );
