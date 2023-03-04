@@ -1,17 +1,17 @@
 import React from "react";
 import "./checkout-item.styles.scss";
-import Button from "../button/button.component";
+
 const CheckoutItem = ({ cartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
   return (
-    <div className="cart-item-container">
-      <img src={imageUrl} alt={`${name}`} />
-      <span className="description">{name}</span>
-      <div className="quantity-container">
-        <span className="quantity">{quantity}</span>
+    <div className="checkout-item-container">
+      <div className="image-container">
+        <img src={imageUrl} alt={`${name}`} />
       </div>
+      <span className="name">{name}</span>
+      <span className="quantity">{quantity}</span>
       <span className="price">{price}</span>
-      <Button>Remove</Button>
+      <div className="remove-button">&#10005;</div>
     </div>
   );
 };
