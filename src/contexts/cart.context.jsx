@@ -16,12 +16,31 @@ const addCartItem = (cartItems, productToAdd) => {
   // if found, increment quantity
   // return new array
 };
+
+const decreaseItemCart = (cartItems, productToDecrease) => {
+  const existingCartItem = cartItems.find(
+    (cartItem) => cartItem.id === productToDecrease.id
+  );
+  if (existingCartItem.quantity === 1) {
+    return cartItems.filter((cartItem) => cartItem.id !== productToDecrease.id);
+  }
+  return cartItems.map((cartItem) =>
+    cartItem.id === productToDecrease.id
+      ? {
+          ...cartItem,
+          quantity: cartItem.quantity - 1,
+        }
+      : cartItem
+  );
+};
+
 export const CartContext = createContext({
   isCartOpen: false,
   setIsCartOpen: () => {},
   cartItems: [],
   addItemToCart: () => {},
   cartCount: 0,
+  decreaseItemInCart: () => {},
 });
 
 export const CartProvider = ({ children }) => {
@@ -40,12 +59,18 @@ export const CartProvider = ({ children }) => {
   const addItemToCart = (productToAdd) => {
     setCartItems(addCartItem(cartItems, productToAdd));
   };
+
+  const decreaseItemInCart = (productToDecrease) => {
+    setCartItems(decreaseItemCart(cartItems, productToDecrease));
+  };
+
   const value = {
     isCartOpen,
     setIsCartOpen,
     addItemToCart,
     cartItems,
     cartCount,
+    decreaseItemInCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
