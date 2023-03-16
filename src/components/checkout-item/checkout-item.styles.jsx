@@ -1,4 +1,6 @@
-.checkout-item-container {
+import styled from "styled-components";
+
+export const CheckoutItemContainer = styled.div`
   width: 100%;
   display: flex;
   min-height: 100px;
@@ -6,7 +8,6 @@
   padding: 15px 0;
   font-size: 20px;
   align-items: center;
-
   .image-container {
     width: 23%;
     padding-right: 15px;
@@ -33,9 +34,8 @@
       margin: 0 10px;
     }
   }
-
   .remove-button {
     padding-left: 12px;
     cursor: pointer;
   }
-}
+`;
